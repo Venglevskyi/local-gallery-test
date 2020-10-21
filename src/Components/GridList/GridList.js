@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -21,6 +21,7 @@ const GridList = ({
   onRemoveImage,
   onGetIdImage,
   onGetInfoByImg,
+  onGoBack,
 }) => {
   const classes = useStyles();
 
@@ -35,6 +36,9 @@ const GridList = ({
           <p>Height: {`${metInfo.ExifImageHeight} px`}</p>
           <p>Width: {`${metInfo.ExifImageWidth} px`}</p>
           <p>CreateDate: {metInfo.GPSDateStamp}</p>
+          <button type="button" onClick={onGoBack}>
+            Go back
+          </button>
         </div>
       )}
 

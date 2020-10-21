@@ -33,8 +33,9 @@ const App = () => {
         const getDb = await db.images.toArray();
         setCollection(getDb);
         navigator.storage.estimate().then((estimate) => {
-          const remainig = estimate.quota - estimate.usage;
-          setStore(remainig);
+          const remaining = estimate.quota - estimate.usage;
+          const quota = estimate.usage;
+          setStore({ remaining, quota });
         });
       } catch (e) {
         console.error(e);
@@ -84,13 +85,17 @@ const App = () => {
     }
   };
 
+  const goBack = () => {
+    setIdImageInForm(null);
+  };
+
   return (
     <Layout>
       <AddForm onAddImages={addImages} />
       {store && (
         <p
           style={{ textAlign: "center" }}
-        >{`You have ${store} B in IndexeDB`}</p>
+        >{`You have ${store.remaining} B in IndexeDB and used ${store.quota} B`}</p>
       )}
       <ul className={styles.gallery}>
         {collection.length > 0 &&
@@ -100,6 +105,7 @@ const App = () => {
               collection={item}
               metInfo={metInfo}
               getIdImageInForm={idImageInForm}
+              onGoBack={goBack}
               onRemoveImage={removeImage}
               onGetIdImage={getIdImage}
               onGetInfoByImg={getInfoByImg}
